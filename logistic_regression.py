@@ -5,8 +5,12 @@ def draw(x1, x2):
     """Draw line between x1 and x2"""
     line = plt.plot(x1, x2)
 
+def sigmoid(score):
+    """Calculate sigmoid of score"""
+    return 1 / (1 + np.exp(-score))
+
 ## Create array of random 2D points
-n_pts = 100
+n_pts = 3
 standard_deviation = 2
 np.random.seed(0)
 
@@ -19,7 +23,7 @@ all_points = np.vstack((top_region, bottom_region))
 w1 = -0.2
 w2 = -0.35
 b = 3.5
-line_parameters = np.matrix([w1, w2, b])
+line_parameters = np.matrix([w1, w2, b]).T
 
 ## Find upper right and lower left points to start line
 x1 = np.array([bottom_region[:, 0].min(), top_region[:, 0].max()])
@@ -30,4 +34,8 @@ _, ax = plt.subplots(figsize=(4,4))
 ax.scatter(top_region[:,0], top_region[:,1], color='r')
 ax.scatter(bottom_region[:,0], bottom_region[:,1], color='b')
 draw(x1, x2)
-plt.show()
+plt.show() 
+
+linear_combination = all_points * line_parameters
+probabilities = sigmoid(linear_combination)
+print(probabilities)
