@@ -9,8 +9,15 @@ def sigmoid(score):
     """Calculate sigmoid of score"""
     return 1 / (1 + np.exp(-score))
 
+def calculate_error(line_parameters, points, y):
+    """Calculate cross entropy error (greater number is more error)"""
+    m = points.shape[0]
+    p = sigmoid(points*line_parameters)
+    cross_entropy = -(np.log(p).T * y + np.log(1-p).T * (1-y)) / m
+    return cross_entropy
+ 
 ## Create array of random 2D points
-n_pts = 3
+n_pts = 7 
 standard_deviation = 2
 np.random.seed(0)
 
@@ -20,9 +27,9 @@ bottom_region = np.array([np.random.normal(5, standard_deviation, n_pts), np.ran
 all_points = np.vstack((top_region, bottom_region))
 
 ## Define line parameters
-w1 = -0.2
-w2 = -0.35
-b = 3.5
+w1 = -0.1
+w2 = -0.15
+b = 0 
 line_parameters = np.matrix([w1, w2, b]).T
 
 ## Find upper right and lower left points to start line
@@ -36,6 +43,13 @@ ax.scatter(bottom_region[:,0], bottom_region[:,1], color='b')
 draw(x1, x2)
 plt.show() 
 
+## Find probabilities of being blue
 linear_combination = all_points * line_parameters
 probabilities = sigmoid(linear_combination)
-print(probabilities)
+
+## Label outputs
+y = np.array([np.zeros(n_pts), np.ones(n_pts)]).reshape(2*n_pts,1)
+
+## Calculate Error
+cross_entropy = calculate_error(line_parameters, all_points, y)
+print(cross_entropy)
