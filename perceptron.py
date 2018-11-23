@@ -27,4 +27,11 @@ model = Sequential()
 model.add(Dense(units=1, input_shape=(2,), activation='sigmoid'))
 adam = Adam(lr = 0.1)
 model.compile(adam, loss='binary_crossentropy', metrics=['accuracy'])
-model.fit(x=X, y=Y, verbose=1, batch_size=50, epochs=500, shuffle='true')
+h = model.fit(x=X, y=Y, verbose=1, batch_size=50, epochs=300, shuffle='true')
+
+## Plot accuracy
+plt.plot(h.history['acc'])
+plt.title('accuracy')
+plt.xlabel('epoch')
+plt.legend(['accuracy'])
+plt.show()
