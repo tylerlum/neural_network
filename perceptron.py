@@ -23,6 +23,7 @@ def plot_decision_boundary(X, Y, model):
     plt.contourf(xx, yy, z)
  
 def plot_history(h, y_variable):
+    """Plot of y_variable vs. epoch. eg. 'acc', 'loss'"""
     plt.plot(h.history[y_variable])
     plt.title(y_variable)
     plt.xlabel('epoch')
@@ -57,7 +58,16 @@ h = model.fit(x=X, y=Y, verbose=1, batch_size=50, epochs=300, shuffle='true')
 ## Plot loss
 # plot_history(h, 'loss')
 
+## Plot decision boundary and training data points
 plot_decision_boundary(X, Y, model)
 plt.scatter(X[:n_pts, 0], X[:n_pts, 1])
 plt.scatter(X[n_pts:, 0], X[n_pts:, 1])
+
+## Get predict new data
+x, y = 7.5, 5
+point = np.array([[x, y]])
+print(point)
+prediction = model.predict(point)
+plt.plot([x], [y], marker='o', markersize=10, color='b')
+print("Prediction is {0}".format(prediction))
 plt.show()
