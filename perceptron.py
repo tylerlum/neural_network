@@ -7,6 +7,28 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.optimizers import Adam
 
+def plot_decision_boundary(X, Y, model):
+    """Make a plot of the decision boundary"""
+    ## Span of x and y values of points
+    tolerance = 1
+    xa_span = np.linspace(min(X[:,0]) - tolerance, max(X[:,0]) + tolerance)
+    xb_span = np.linspace(min(X[:,1]) - tolerance, max(X[:,1]) + tolerance)
+    
+    ## Make meshgrid
+    xx, yy = np.meshgrid(xa_span, xb_span)
+    xx_, yy_ = xx.ravel(), yy.ravel()
+    grid = np.c_[xx_, yy_]
+    pred_func = model.predict(grid)
+    z = pred_func.reshape(xx.shape)
+    plt.contourf(xx, yy, z)
+ 
+def plot_history(h, y_variable):
+    plt.plot(h.history[y_variable])
+    plt.title(y_variable)
+    plt.xlabel('epoch')
+    plt.legend([y_variable])
+    plt.show()
+
 ## Make random 2D arrays
 n_pts = 500
 np.random.seed(0)
@@ -20,7 +42,7 @@ Y = np.matrix(np.append(np.zeros(n_pts), np.ones(n_pts))).T
 ## Scatter plot
 plt.scatter(X[:n_pts, 0], X[:n_pts, 1])
 plt.scatter(X[n_pts:, 0], X[n_pts:, 1])
-plt.show()
+# plt.show()
 
 ## Create perceptron
 model = Sequential()
@@ -30,14 +52,12 @@ model.compile(adam, loss='binary_crossentropy', metrics=['accuracy'])
 h = model.fit(x=X, y=Y, verbose=1, batch_size=50, epochs=300, shuffle='true')
 
 ## Plot accuracy
-plt.plot(h.history['acc'])
-plt.title('accuracy')
-plt.xlabel('epoch')
-plt.legend(['accuracy'])
-plt.show()
+# plot_history(h, 'acc')
 
-plt.plot(h.history['loss'])
-plt.title('loss')
-plt.xlabel('epoch')
-plt.legend(['loss'])
+## Plot loss
+# plot_history(h, 'loss')
+
+plot_decision_boundary(X, Y, model)
+plt.scatter(X[:n_pts, 0], X[:n_pts, 1])
+plt.scatter(X[n_pts:, 0], X[n_pts:, 1])
 plt.show()
