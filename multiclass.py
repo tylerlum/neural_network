@@ -50,5 +50,11 @@ if __name__ == '__main__':
     plt.scatter(X[Y==0,0],X[Y==0,1])
     plt.scatter(X[Y==1,0],X[Y==1,1])
     plt.scatter(X[Y==2,0],X[Y==2,1])
-    plt.show()
      
+    ## Predict point
+    x, y = 0.5, 0.5
+    point = np.array([[x,y]])
+    prediction = model.predict(point)
+    plt.plot([x],[y], marker='o', markersize=10, color='r')
+    plt.show()
+    print("Point {0}: Prediction is {1}".format(point[0], prediction))
