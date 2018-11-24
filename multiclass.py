@@ -27,21 +27,23 @@ def plot_decision_boundary(X, Y, model):
 if __name__ == '__main__':
     ## Setup dataset
     n_pts = 500
-    centers = [[-1,1], [-1,-1], [1,1]]
+    centers = [[-1,1], [-1,-1], [1,1], [1,-1], [0,0]]
     X, Y = datasets.make_blobs(n_samples=n_pts, random_state=123, centers=centers, cluster_std=0.4)
 
     ## Plot datasets
     plt.scatter(X[Y==0,0],X[Y==0,1])
     plt.scatter(X[Y==1,0],X[Y==1,1])
     plt.scatter(X[Y==2,0],X[Y==2,1])
+    plt.scatter(X[Y==3,0],X[Y==3,1])
+    plt.scatter(X[Y==4,0],X[Y==4,1])
     # plt.show()
 
     ## One hot encoding
-    Y_cat = to_categorical(Y, 3) 
+    Y_cat = to_categorical(Y, 5) 
 
     ## Make neural network
     model = Sequential()
-    model.add(Dense(units=3, input_shape=(2,), activation='softmax'))
+    model.add(Dense(units=5, input_shape=(2,), activation='softmax'))
     model.compile(Adam(lr=0.1), loss='categorical_crossentropy', metrics=['accuracy'])
     model.fit(x=X, y=Y_cat, verbose=1, batch_size=50, epochs=100)
 
@@ -50,6 +52,8 @@ if __name__ == '__main__':
     plt.scatter(X[Y==0,0],X[Y==0,1])
     plt.scatter(X[Y==1,0],X[Y==1,1])
     plt.scatter(X[Y==2,0],X[Y==2,1])
+    plt.scatter(X[Y==3,0],X[Y==3,1])
+    plt.scatter(X[Y==4,0],X[Y==4,1])
      
     ## Predict point
     x, y = 0.5, 0.5
