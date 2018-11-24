@@ -42,7 +42,6 @@ if __name__ == '__main__':
     plot_decision_boundary(X, Y, model)
     plt.scatter(X[:n_pts, 0], X[:n_pts, 1])
     plt.scatter(X[n_pts:, 0], X[n_pts:, 1], color = 'r')
-    plt.show()
 
     ## Test prediction of point
     x0, y0, x1, y1 = 0, 0, 1.5, 2
@@ -54,6 +53,7 @@ if __name__ == '__main__':
 
     plt.plot([x0], [y0], marker='o', markersize=10, color='r')
     plt.plot([x1], [y1], marker='o', markersize=10, color='g')
+    plt.show()
 
     print("Point ({0}, {1}): Prediction is {2}".format(x0, y0, prediction0))
     print("Point ({0}, {1}): Prediction is {2}".format(x1, y1, prediction1))
