@@ -10,3 +10,5 @@ This repository contains various Python files that demonstrate the power of mach
 * `multiclass.py` - Uses `Keras` to differentiate data between 5 different output classes 
 
 * `perceptron.py` - Uses `Keras` to perform logistic regression
+
+* `Polynomial_Regression.ipynb` - Uses polynomial regression on a sinusoidal curve 
